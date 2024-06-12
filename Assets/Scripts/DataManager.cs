@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
-    public string playerName;
+    public string nameInput;
 
     // Start is called before the first frame update
     private void Awake()
@@ -30,7 +30,7 @@ public class DataManager : MonoBehaviour
 
     public void ReadInput(string s)
     {
-        playerName = s;
-        Debug.Log(playerName);
+        nameInput = s;
+        Debug.Log(nameInput);
     }
 }
