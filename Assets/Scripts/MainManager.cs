@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
 {
-    public Brick BrickPrefab;
+    public List<Brick> BrickPrefabs;
     public int LineCount = 6;
     public Rigidbody Ball;
 
@@ -35,7 +34,7 @@ public class MainManager : MonoBehaviour
             for (int x = 0; x < perLine; ++x)
             {
                 Vector3 position = new Vector3(-1.5f + step * x, 2.5f + i * 0.3f, 0);
-                var brick = Instantiate(BrickPrefab, position, Quaternion.identity);
+                var brick = Instantiate(GenerateBrick(), position, Quaternion.identity);
                 brick.PointValue = pointCountArray[i];
                 brick.onDestroyed.AddListener(AddPoint);
             }
@@ -67,6 +66,25 @@ public class MainManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+    }
+
+    private Brick GenerateBrick()
+    {
+        int num = Random.Range(0, 101);
+        
+        if (num <= 80)
+        {
+            return BrickPrefabs[0];
+        } else if (num <= 90)
+        {
+            return BrickPrefabs[1];
+        } else
+        {
+            return BrickPrefabs[2];
+        }
+
+
+
     }
 
     void AddPoint(int point)

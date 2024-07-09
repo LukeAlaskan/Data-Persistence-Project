@@ -5,13 +5,17 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    private Rigidbody m_Rigidbody;
+    protected Rigidbody m_Rigidbody;
 
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
     }
-    
+    private void Awake()
+    {
+        m_Rigidbody = GetComponent<Rigidbody>();
+    }
+
     private void OnCollisionExit(Collision other)
     {
         var velocity = m_Rigidbody.velocity;

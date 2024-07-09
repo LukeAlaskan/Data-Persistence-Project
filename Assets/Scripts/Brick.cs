@@ -7,17 +7,25 @@ using UnityEngine.Events;
 public class Brick : MonoBehaviour
 {
     public UnityEvent<int> onDestroyed;
+    protected bool isHit = false;
+
+
     
     public int PointValue;
 
     void Start()
+    {
+        onStart();
+    }
+
+    public void onStart()
     {
         var renderer = GetComponentInChildren<Renderer>();
 
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         switch (PointValue)
         {
-            case 1 :
+            case 1:
                 block.SetColor("_BaseColor", Color.green);
                 break;
             case 2:
@@ -33,11 +41,28 @@ public class Brick : MonoBehaviour
         renderer.SetPropertyBlock(block);
     }
 
-    private void OnCollisionEnter(Collision other)
+    public virtual void onHit()
     {
         onDestroyed.Invoke(PointValue);
-        
+
         //slight delay to be sure the ball have time to bounce
         Destroy(gameObject, 0.2f);
+    }
+    private void OnCollisionEnter(Collision other)
+    {
+        if (!isHit)
+        {
+            onHit();
+        }
+        isHit = true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!isHit)
+        {
+            onHit();
+        }
+        isHit = true;
     }
 }

@@ -7,9 +7,16 @@ public class DeathZone : MonoBehaviour
 {
     public MainManager Manager;
 
-    private void OnCollisionEnter(Collision other)
+
+    private void OnTriggerEnter(Collider other)
     {
-        Destroy(other.gameObject);
-        Manager.GameOver();
+        if (other.gameObject.tag == "Player")
+        {
+            Destroy(other.gameObject);
+            Manager.GameOver();
+        } else
+        {
+            Destroy(other.gameObject);
+        }
     }
 }
